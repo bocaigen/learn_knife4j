@@ -17,7 +17,6 @@ public class Knife4jBootApplication {
         Environment env = application.getEnvironment();
         String port = env.getProperty("server.port");
         String hostAddress = InetAddress.getLocalHost().getHostAddress();
-//        System.out.println(env.getProperty("spring.application.name"));
         System.out.println("http://"+hostAddress+":"+port);
         System.out.println("http://"+hostAddress+":"+port + "/doc.html");
     }
