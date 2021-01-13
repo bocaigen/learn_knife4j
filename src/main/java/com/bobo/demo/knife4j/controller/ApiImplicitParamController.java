@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
+/**
+ * ApiImplicitParam注解用在方法上
+ * 主要作用是在页面中声明请求参数
+ */
 @Api(tags = "ApiImplicitParam注解学习")
 @RestController
 @RequestMapping(value = "/param")
@@ -145,6 +149,12 @@ public class ApiImplicitParamController {
      * 不建议使用
      * 注意：使用knife4j 管理参数
      * 当ApiImplicitParam中的参数和@RequestParam中的参数不一致时，knife4j会把两个地方的参数加起来展示在UI中
+     * 例如下面方法，knife4j会让你传4个参数
+     * param1
+     * param2
+     * param3
+     * map
+     *
      * 目前设置忽略参数不生效
      * @param map
      * @return
