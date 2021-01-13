@@ -8,6 +8,9 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 注解：@Api
  * 1、使用在类上;
@@ -48,16 +51,18 @@ public class IndexController {
             @RequestParam(value = "param1")String name,
             @PathVariable(value = "param2")int age,
             @RequestHeader(value = "param3")String token){
-        ReturnResult returnResult = new ReturnResult(name,age,token);
-        return ResponseEntity.ok(returnResult);
+        Map<String,Object> map = new HashMap<>();
+        map.put("name",name);
+        map.put("age",age);
+        map.put("token",token);
+        return ResponseEntity.ok(ReturnResult.success(map));
     }
 
     @ApiOperation(value = "ApiOperation的response属性",notes = "注解ApiOperation的response属性",tags = "新分组",response = ReturnResult.class)
     @ApiImplicitParam(name = "param1",value = "参数",required = true,dataType = "String",defaultValue = "张三")
     @GetMapping("/learnReturnResult2")
     public ReturnResult returnResult2(@RequestParam(value = "param1")String name){
-        ReturnResult returnResult = new ReturnResult(name,1000,"我是信息");
-        return returnResult;
+        return ReturnResult.success(name);
     }
 
 

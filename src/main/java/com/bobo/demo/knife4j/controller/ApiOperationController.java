@@ -1,5 +1,7 @@
 package com.bobo.demo.knife4j.controller;
 
+import com.bobo.demo.knife4j.model.ReturnResult;
+import com.bobo.demo.knife4j.model.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -32,11 +34,11 @@ public class ApiOperationController {
         return ResponseEntity.ok("查找用户："+username);
     }
 
-    @ApiOperation(value = "添加用户",tags = "用户模块")
-    @ApiImplicitParam(name = "username",value = "用户名",defaultValue = "张三")
+    @ApiOperation(value = "添加用户",notes = "添加用户数据",tags = "用户模块",response = ReturnResult.class)
+//    @ApiImplicitParam(name = "username",value = "用户名",defaultValue = "张三")
     @PostMapping("/insertUser")
-    public ResponseEntity<String> insertUser(String username){
-        return ResponseEntity.ok("添加用户："+username);
+    public ReturnResult insertUser(User user){
+        return ReturnResult.success(user);
     }
 
     @ApiOperation(value = "修改用户",tags = "用户模块")

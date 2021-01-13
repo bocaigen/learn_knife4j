@@ -1,5 +1,6 @@
 package com.bobo.demo.knife4j.model;
 
+import com.bobo.demo.knife4j.controller.enumclass.ResultCode;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -8,8 +9,7 @@ import java.io.Serializable;
 
 @ApiModel(description = "返回接口类")
 public class ReturnResult implements Serializable {
-    @ApiModelProperty(value = "是否成功")
-    private boolean success = true;
+
     @ApiModelProperty(value = "返回对象")
     private Object data;
     @ApiModelProperty(value = "标识码")
@@ -17,20 +17,31 @@ public class ReturnResult implements Serializable {
     @ApiModelProperty(value = "提示信息")
     private String message = "成功";
 
+    public ReturnResult(ResultCode resultCode) {
+        this.code = resultCode.code();
+        this.message = resultCode.message();
+    }
 
-    public ReturnResult(Object data, Integer code, String message) {
-        super();
+    public ReturnResult(ResultCode resultCode,Object data) {
+        this.code = resultCode.code();
+        this.message = resultCode.message();
         this.data = data;
-        this.code = code;
-        this.message = message;
     }
 
-    public boolean isSuccess() {
-        return success;
+    public static ReturnResult success(){
+        return new ReturnResult(ResultCode.SUCCESS);
     }
 
-    public void setSuccess(boolean success) {
-        this.success = success;
+    public static ReturnResult success(Object data){
+        return new ReturnResult(ResultCode.SUCCESS,data);
+    }
+
+    public static ReturnResult fail(ResultCode resultCode){
+        return new ReturnResult(resultCode);
+    }
+
+    public static ReturnResult fail(ResultCode resultCode,Object data){
+        return new ReturnResult(resultCode,data);
     }
 
     public Object getData() {
@@ -60,8 +71,7 @@ public class ReturnResult implements Serializable {
     @Override
     public String toString() {
         return "ReturnResult{" +
-                "success=" + success +
-                ", data=" + data +
+                "data=" + data +
                 ", code=" + code +
                 ", message='" + message + '\'' +
                 '}';
