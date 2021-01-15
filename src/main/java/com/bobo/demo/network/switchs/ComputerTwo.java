@@ -1,17 +1,17 @@
-package com.bobo.demo.network.hub;
+package com.bobo.demo.network.switchs;
 
 import com.alibaba.fastjson.JSONObject;
-import com.bobo.demo.network.Cable;
+import com.bobo.demo.network.hub.MsgBody;
 
 /**
  * 名称：电脑
  * 功能：1、发送信息
  *      2、接收信息
  */
-public class ComputerOne {
+public class ComputerTwo {
     private String name;
     private String mac;
-    private Cable cable;//每个电脑实例对应一根网线实例
+    private String data;
 
     public String getName() {
         return name;
@@ -29,49 +29,36 @@ public class ComputerOne {
         this.mac = mac;
     }
 
-    public Cable getCable() {
-        return cable;
+    public String getData() {
+        return data;
     }
 
-    public void setCable(Cable cable) {
-        this.cable = cable;
+    public void setData(String data) {
+        this.data = data;
     }
 
-    public ComputerOne(Cable cable) {
-        this.cable = cable;
-    }
-
-    public ComputerOne(String name, String mac, Cable cable) {
+    public ComputerTwo(String name, String mac) {
         this.name = name;
         this.mac = mac;
-        this.cable = cable;
     }
 
     /**
-     * 电脑发送消息-将消息传入网线
+     * 电脑发送消息
      * @param msg
      * @return
      */
-    public Cable sendInfo(MsgBody msg){
-        boolean access = cable.access(JSONObject.toJSONString(msg));
-        if(access){
-            System.out.println(this.name+"消息已发出");
-        }
-        return cable;
+    public void sendInfo(MsgBody msg){
+        String message = JSONObject.toJSONString(msg);
+        this.setData(message);
     }
 
     /**
-     * 电脑接收数据-从网线接收数据
+     * 电脑接收数据
      * @return
      */
-    public boolean reciveInfo(){
-        if(cable != null && cable.getSize() > 0){
-            String export = cable.export();
-            return this.parseMessageBody(export);
-        }else{
-            System.out.println(this.name+"接收数据失败");
-            return false;
-        }
+    public String reciveInfo(){
+        String data = this.getData();
+        return data;
     }
 
     /**
